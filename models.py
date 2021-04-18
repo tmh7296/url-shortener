@@ -3,8 +3,8 @@ from flask_sqlalchemy import SQLAlchemy
  
 db = SQLAlchemy()
  
-class Url(db.Model):
-    __tablename__ = 'urls'
+class ShortenedUrl(db.Model):
+    __tablename__ = 'shortened_urls'
  
     slug = db.Column(db.String(), primary_key=True)
     url = db.Column(db.String())
