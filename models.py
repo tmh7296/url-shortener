@@ -2,7 +2,8 @@ from datetime import datetime
 from flask_sqlalchemy import SQLAlchemy
  
 db = SQLAlchemy()
- 
+
+# class for the ORM to infer DB table creations
 class ShortenedUrl(db.Model):
     __tablename__ = 'shortened_urls'
  

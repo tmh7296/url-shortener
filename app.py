@@ -31,18 +31,22 @@ manager.add_command('db', MigrateCommand)
 def createShortenedUrl():
     data = request.get_json(force=True)
 
+    # checking the validity of the request body
     if not validateRequestBody(data):
         raise BadRequest('Request payload is malformed')
+
+    # validate the provided slug is not in use
     if 'slug' in data:
         slug = data['slug']
         if ShortenedUrl.query.get(slug) != None:
             raise BadRequest('Slug is not unique')
     else:
         slug = uuid.uuid4().hex[:6].lower()
-        # validate generated slug is not in use
+        # validate the generated slug is not in use
         while ShortenedUrl.query.get(slug) != None:
             slug = uuid.uuid4().hex[:6].lower()
 
+    # create object and write to db
     url = data['url']
     shortenedUrl = ShortenedUrl(slug=slug, url=url)
 
