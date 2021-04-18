@@ -7,7 +7,9 @@ Scaffolding for a python/flask project with docker + postgresql + SQLAlchemy
 * Docker compose is installed
 
 To build and run the app, execute the command: \
-`docker-compose up --build`
+```
+docker-compose up --build
+```
 
 # Creating DB migrations
 ## Prerequisites
