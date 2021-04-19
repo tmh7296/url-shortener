@@ -2,7 +2,7 @@ import os
 import uuid
 
 from exceptions import BadRequest
-from flask import Flask, request, Response, jsonify, redirect, abort
+from flask import Flask, request, Response, jsonify, redirect, abort,json
 from flask_migrate import Migrate, MigrateCommand
 from flask_script import Manager
 from flask_sqlalchemy import SQLAlchemy
@@ -46,17 +46,23 @@ def createShortenedUrl():
         while ShortenedUrl.query.get(slug) != None:
             slug = uuid.uuid4().hex[:6].lower()
 
-    # create object and write to db
     url = data['url']
+    response = Response()
+    returnObj = {
+        'url': url,
+        'slug': slug,
+        'shortened_url': '{}r/{}'.format(request.url_root, slug)
+    }
+    response.headers['location'] = '/r/{}'.format(slug)
+    response.headers['Content-Type'] = 'application/json'
+    response.status_code = 201
+    response.data = json.dumps(returnObj)
+
+    # create object and write to db
     shortenedUrl = ShortenedUrl(slug=slug, url=url)
 
     db.session.add(shortenedUrl)
     db.session.commit()
-
-    # returnObj = {'URL': '/r/{}'.format(slug)}
-    response = Response()
-    response.headers['location'] = '/r/{}'.format(slug)
-    response.status_code = 201
 
     return response
 
