@@ -2,7 +2,7 @@ FROM python:3.6.5-alpine3.7
 
 WORKDIR /app
 
-COPY . .
+COPY . . 
 
 RUN \
     apk add --no-cache postgresql-libs && \
@@ -11,4 +11,6 @@ RUN \
     python3 -m pip install -r requirements.txt --no-cache-dir && \
     apk --purge del .build-deps
 
-CMD [ "python3", "-m" , "flask", "run", "--host=0.0.0.0"]
+RUN chmod +x /app/entrypoint.sh
+
+ENTRYPOINT /app/entrypoint.sh
