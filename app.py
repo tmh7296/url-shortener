@@ -29,6 +29,9 @@ manager.add_command('db', MigrateCommand)
 ### Endpoints
 @app.route('/shortened_url', methods=['POST'])
 def createShortenedUrl():
+    """
+    Endpoint that accepts a URL and an optional slug and return a shortened version
+    """
     data = request.get_json(force=True)
 
     # checking the validity of the request body
@@ -68,9 +71,15 @@ def createShortenedUrl():
 
 @app.route('/r/<slug>', methods=['GET'])
 def redirectToOriginalUrl(slug):
+    """
+    Endpoint that takes a slug as a path param and redirects the user to the original URL associated with the slug
+
+    After re-reading the spec sheet, I think it would've been more accurate to have the GET return the original URL
+    in the response rather than redirecting the user. This endpoint is meant to be used in the browser. 
+    """
     url = ShortenedUrl.query.get(slug)
     if url != None:
-        return redirect(url.url)
+        return redirect(url.url, code=302)
     abort(404)
 
 

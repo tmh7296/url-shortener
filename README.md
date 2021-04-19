@@ -1,6 +1,6 @@
 # Table of Contents  
 [Starting the app](#starting-the-app)  
-[API Documentation](#api-docs)   
+[API Documentation](#api-documentation)   
 
 ## Starting the app
 ### Prerequisites
@@ -42,5 +42,15 @@ POST endpoint to shorten a URL. The endpoint takes a URL, and an optional slug. 
 ### route: `/r/<slug>`
 
 Description:
-GET endpoint to redirect to the original URL that was shortened.
+GET endpoint to redirect to the original URL that was shortened, designed to be hit in the browser's address bar.
+
+## Project Details
+
+Estimated time: Hard to say. I think I went a little overboard on this project because, after I got docker/sqlalchemy/postgres all working together, I forked this project as a sort of python skeleton project to be used in the future. There are shortcuts I could have taken specifically for this assignment that would have been less than ideal for a skeleton project. All told probably 5-6 hours on and off, though writing the actual logic for the URL shortener was far and away the easiest part. Fighting with Docker and the DB migrations was a bulk of the work.
+
+Known issues: 
+* There are no tests in this project. Ideally these assignments have a test suite, and I know deep down I should write one, but I've invested a lot of time into this as is.
+* URLs are not validated, any provided URL that is shortened but does not function as a real URL will be provided a shortend URL but will behave as expected.
+* The project sheet made it sound like I should've written a GET that takes in the shortened URL and returns the full URL in the response body. My approach (redirecting the user to the original URL) kind of satisfies this constraint but maybe not as it was written
+
 
